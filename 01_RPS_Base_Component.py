@@ -1,28 +1,6 @@
 import random
 
 
-# ask user # of rounds then loop...
-def yes_no(question):
-    valid = False
-    while not valid:
-        response = input(question).lower()
-
-        if response == "yes" or response == "y":
-            response = "yes"
-            return response
-
-        elif response == "no" or response == "n":
-            response = "no"
-            return response
-
-        else:
-            print()
-            print("============================")
-            print("**please answer yes or no**")
-            print("============================")
-            print()
-
-
 # Ask user if they have played the game before.
 # If 'no' show instructions
 def instructions():
@@ -32,11 +10,15 @@ def instructions():
     print()
     print("you will be asked to choose Rock, Paper, Scissors")
     print("or you can type 'xxx' to end the game manually")
+    print("(You can also just type the first letter of the word instead of typing the whole word)")
     print()
-    print("the rules are")
-    print("Rock beats scissors")
-    print("Scissors beats paper")
-    print("Paper beats rock")
+    print("the rules are:")
+    print("- Rock beats scissors")
+    print("- Scissors beats paper")
+    print("- Paper beats rock")
+    print()
+    print("=====Good Luck=====")
+    print()
     return ""
 
 
@@ -90,7 +72,7 @@ game_history = []
 
 # Main routine goes here
 # Introduction question
-played_before = yes_no("Have you played the game before? ")
+played_before = choice_checker("Have you played the game before? ", yes_no_list, "Please enter yes / no")
 
 if played_before == "no":
     instructions()
@@ -120,7 +102,7 @@ while end_game == "no":
     print(heading)
 
     # Tell the user what their options are
-    choose_instruction = "Please choose rock (r), paper(p), scissors(s) or 'xxx' to exit: "
+    choose_instruction = "Choose either rock (r), paper(p), scissors(s) or 'xxx' to exit: "
 
     # Print error message if user choice is not valid
     choose_error = "Please choose from Rock, Paper, Scissors (or xxx to end game)"
@@ -175,24 +157,28 @@ rounds_won = rounds_played - rounds_lost - rounds_drawn
 
 # displays game stats with % values with no decimals
 
-# Calculate Game Stats
-percent_win = rounds_won / rounds_played * 100
-percent_lost = rounds_lost / rounds_played * 100
-percent_tie = rounds_drawn / rounds_played * 100
+if rounds_played > 1:
+    # Calculate Game Stats
+    percent_win = rounds_won / rounds_played * 100
+    percent_lost = rounds_lost / rounds_played * 100
+    percent_tie = rounds_drawn / rounds_played * 100
 
-# ask the user if they want to see their game history
-print()
-history_display = yes_no("do you want to see your game history? ")
-if history_display == "yes":
+    # ask the user if they want to see their game history
     print()
-    for item in game_history:
-        print(item)
+    history_display = choice_checker("do you want to see your game history? ", yes_no_list, "please choose yes / no")
+    if history_display == "yes":
+        print()
+        for item in game_history:
+            print(item)
 
-# End of Game Statements
-print()
-print('******** END GAME SUMMARY ********')
-print(f"Won: {rounds_won} \t|\t Lost: {rounds_lost} \t|\t Draw: {rounds_drawn}")
-print()
-print(f"Win: {rounds_won}, ({percent_win:.0f}%)\nLoss: {rounds_lost}, ({ percent_lost:.0f}%)\nDraw: {rounds_drawn}, ({percent_tie:.0f}%)")
-print()
-print("Thanks for playing")
+    # End of Game Statements
+    print()
+    print("******** END GAME SUMMARY ********")
+    print(f"Won: {rounds_won} \t|\t Lost: {rounds_lost} \t|\t Draw: {rounds_drawn}")
+    print()
+    print(f"Win: {rounds_won}, ({percent_win:.0f}%)\nLoss: {rounds_lost}, ({ percent_lost:.0f}%)\nDraw: {rounds_drawn}, ({percent_tie:.0f}%)")
+    print()
+    print("Thanks for playing")
+
+else:
+    print("🐔🐔🐔 You chickened out. Squawk Squawk. 🐔🐔🐔")
